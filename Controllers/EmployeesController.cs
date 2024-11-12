@@ -52,14 +52,15 @@ namespace Task.Controllers
             var current = context.Employees.Find(id);
             if (current == null)
             {
-                return NotFound("employee not found");
+                return NotFound("Employee not found");
             }
 
-            current.EmpName = employee.EmpName;
-            current.City = employee.City;
+            employee.Adapt(current);
+
             context.SaveChanges();
-            return Ok(employee);
+            return Ok();
         }
+
         [HttpDelete("Remove")]
         public IActionResult Remove(int EmpId)
         {
@@ -69,11 +70,9 @@ namespace Task.Controllers
                 return NotFound("Employee not found");
             }
 
-            // Remove the employee entity directly
             context.Employees.Remove(employee);
             context.SaveChanges();
 
-            // Adapt to EmpRemove after deletion for the response
             var empRemoveDto = employee.Adapt<EmpRemove>();
             return Ok();
         }
