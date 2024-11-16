@@ -38,6 +38,7 @@ namespace Task
 
 
             app.MapControllers();
+            app.UseExceptionHandler(opt => { });
 
             app.Run();
         }
